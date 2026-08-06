@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="ProcureFlow.Infrastructure/ProcureFlow.Infrastructure.csproj" />
+    <Project Path="ProcureFlow.Shared/ProcureFlow.Shared.csproj" />
+    <Project Path="src/ProcureFlow.API/ProcureFlow.API.csproj" />
+    <Project Path="src/ProcureFlow.Application/ProcureFlow.Application.csproj" />
+    <Project Path="src/ProcureFlow.Domain/ProcureFlow.Domain.csproj" />
+  </Folder>
+</Solution>
