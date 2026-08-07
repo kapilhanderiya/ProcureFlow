@@ -10,4 +10,8 @@
     <ProjectReference Include="..\ProcureFlow.Shared\ProcureFlow.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Users\Events\" />
+  </ItemGroup>
+
 </Project>
