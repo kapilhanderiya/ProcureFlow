@@ -21,4 +21,10 @@
     <ProjectReference Include="..\ProcureFlow.Shared\ProcureFlow.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Persistence\Configurations\" />
+    <Folder Include="Persistence\Migrations\" />
+    <Folder Include="Persistence\Seed\" />
+  </ItemGroup>
+
 </Project>

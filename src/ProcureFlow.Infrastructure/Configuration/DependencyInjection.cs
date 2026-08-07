@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProcureFlow.Infrastructure.Configuration
 {
@@ -15,6 +16,12 @@ namespace ProcureFlow.Infrastructure.Configuration
             this IServiceCollection services,
             IConfiguration configuration)
         {
+
+            services.AddDbContext<Persistence.ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
+
             return services;
         }
     }
