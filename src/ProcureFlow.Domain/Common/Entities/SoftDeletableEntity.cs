@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProcureFlow.Domain.Common.Entities
 {
-    public abstract class SoftDeletableEntity
+    public abstract class SoftDeletableEntity : AuditableEntity
     {
         public bool isDeleted { get; protected set; }
 

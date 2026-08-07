@@ -1,18 +1,22 @@
-﻿using System;
+﻿using ProcureFlow.Domain.Common.Entities;
+using ProcureFlow.Domain.Common.Exceptions;
+using ProcureFlow.Domain.Common.ValueObjects;
+using ProcureFlow.Domain.Roles;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using ProcureFlow.Domain.Common.Entities;
-using ProcureFlow.Domain.Common.ValueObjects;
-
 
 namespace ProcureFlow.Domain.Users
 {
     public class User : SoftDeletableEntity
     {
+
+        private readonly List<UserRole> _userRoles = [];
+
         public string FirstName { get; private set; } = null!;
 
         public string LastName { get; private set; } = null!;
@@ -21,11 +25,13 @@ namespace ProcureFlow.Domain.Users
 
         public UserStatus Status { get; private set; }
 
+        public IReadOnlyCollection<UserRole> UserRoles => _userRoles.AsReadOnly();
+
         private User()
         {
         }
 
-        public User(string firstName, string lastName, string email)
+        public User(string firstName, string lastName, Email email)
         {
             SetName(firstName, lastName);
             ChangeEmail(email);
@@ -57,5 +63,27 @@ namespace ProcureFlow.Domain.Users
         {
             Status = UserStatus.Locked;
         }
+
+        public void AssignRole(Role role)
+        {
+            ArgumentNullException.ThrowIfNull(role);
+
+            if (_userRoles.Any(ur => ur.RoleId == role.Id))
+                throw new DomainException("The user is already assigned to this role.");
+
+            _userRoles.Add(new UserRole(Id, role.Id));
+        }
+
+        public void RemoveRole(Guid roleId)
+        {
+            var userRole = _userRoles
+                .FirstOrDefault(ur => ur.RoleId == roleId);
+
+            if (userRole is null)
+                return;
+
+            _userRoles.Remove(userRole);
+        }
+
     }
 }

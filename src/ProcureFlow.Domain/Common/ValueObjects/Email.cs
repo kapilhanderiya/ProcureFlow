@@ -5,25 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Text.RegularExpressions;
+using ProcureFlow.Domain.Common.Exceptions;
 
 namespace ProcureFlow.Domain.Common.ValueObjects
 {
     public sealed class Email : IEquatable<Email>
     {
         private static readonly Regex EmailRegex =
-            new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            new (@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public string Value { get; }
 
         public Email(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Email is Required.", nameof(value));
+                throw new DomainException("Email is required.");
 
             value = value.Trim().ToLowerInvariant();
 
             if (!EmailRegex.IsMatch(value))
-                throw new ArgumentException("Invalid email format.", nameof(value));
+                throw new DomainException("Invalid email format.");
 
             Value = value;
         }
@@ -37,5 +38,7 @@ namespace ProcureFlow.Domain.Common.ValueObjects
         public override int GetHashCode() => Value.GetHashCode();
 
         public static implicit operator string (Email email) => email.Value;
+
+        public static explicit operator Email(string value) => new(value);
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProcureFlow.Domain.Common.Entities
 {
-    public abstract class AuditableEntity
+    public abstract class AuditableEntity : BaseEntity
     {
         public DateTimeOffset CreatedAt { get; protected set; }
 
