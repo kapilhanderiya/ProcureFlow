@@ -1,10 +1,10 @@
-﻿using System;
+﻿using ProcureFlow.Domain.Common.Entities;
+using ProcureFlow.Domain.Common.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using ProcureFlow.Domain.Common.Entities;
 
 namespace ProcureFlow.Domain.Roles
 {
@@ -24,6 +24,14 @@ namespace ProcureFlow.Domain.Roles
         
         public RolePermission(Guid roleId, Guid permissionId)
         {
+            if(roleId == Guid.Empty)
+            {
+                throw new DomainException("Role ID is required.");
+            }
+            if(permissionId == Guid.Empty)
+            {
+                throw new DomainException("Permission ID is required.");
+            }
             RoleId = roleId;
             PermissionId = permissionId;
         }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ProcureFlow.Domain.Common.Entities;
+using ProcureFlow.Domain.Common.Exceptions;
 using ProcureFlow.Domain.Users;
 
 namespace ProcureFlow.Domain.Roles;
@@ -25,6 +26,14 @@ public class UserRole : AuditableEntity
 
     public UserRole(Guid userId, Guid roleId)
     {
+        if(userId == Guid.Empty)
+        {
+            throw new DomainException("User ID is required.");
+        }
+        if(roleId == Guid.Empty)
+        {
+            throw new DomainException("Role ID is required");
+        }
         UserId = userId;
         RoleId = roleId;
     }

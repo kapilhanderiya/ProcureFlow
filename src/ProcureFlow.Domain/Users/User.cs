@@ -1,5 +1,6 @@
 ﻿using ProcureFlow.Domain.Common.Entities;
 using ProcureFlow.Domain.Common.Exceptions;
+using ProcureFlow.Domain.Common.Guards;
 using ProcureFlow.Domain.Common.ValueObjects;
 using ProcureFlow.Domain.Roles;
 using System;
@@ -34,33 +35,46 @@ namespace ProcureFlow.Domain.Users
         public User(string firstName, string lastName, Email email)
         {
             SetName(firstName, lastName);
+
             ChangeEmail(email);
+
             Status = UserStatus.Active;
         }
 
         public void SetName(string firstName, string lastName)
         {
-            FirstName = firstName.Trim();
-            LastName = lastName.Trim();
+            FirstName = DomainGuard.Required(firstName, "First name is required.");
+
+            LastName = DomainGuard.Required(lastName, "Last name is required.");
         }
 
         public void ChangeEmail(Email email)
         {
+            ArgumentNullException.ThrowIfNull(email);
             Email = email;
         }
 
         public void Activate()
         {
+            if (Status == UserStatus.Active)
+                return;
+
             Status = UserStatus.Active;
         }
 
         public void Deactivate()
         {
+            if (Status == UserStatus.Inactive)
+                return;
+
             Status = UserStatus.Inactive;
         }
 
         public void Lock()
         {
+            if (Status == UserStatus.Locked)
+                return;
+
             Status = UserStatus.Locked;
         }
 
@@ -80,7 +94,7 @@ namespace ProcureFlow.Domain.Users
                 .FirstOrDefault(ur => ur.RoleId == roleId);
 
             if (userRole is null)
-                return;
+                throw new DomainException("The user is not assigned to this role.");
 
             _userRoles.Remove(userRole);
         }

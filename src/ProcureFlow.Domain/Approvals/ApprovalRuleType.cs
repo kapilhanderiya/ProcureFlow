@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProcureFlow.Domain.Common.Enums
+
+
+namespace ProcureFlow.Domain.Approvals
 {
-    public enum VendorStatus
+    public enum ApprovalRuleType
     {
-        Active = 1,
-        Inactive = 2,
-        Blocked = 3
+        AccountThreshold = 1,
+        Department = 2
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using ProcureFlow.Domain.Common.Entities;
+using ProcureFlow.Domain.Common.Guards;
 
 namespace ProcureFlow.Domain.Roles
 {
@@ -25,9 +26,20 @@ namespace ProcureFlow.Domain.Roles
 
         public Permission(string code, string name, string description)
         {
-            Code = code.Trim();
-            Name = name.Trim();
-            Description = description.Trim();
+            Code = DomainGuard.Required(code, "Permission code is required").ToUpperInvariant();
+            Name = DomainGuard.Required(name, "Permission name is required");
+            Description = DomainGuard.Required(description, "Permission description is required");
         }
+
+        public void Rename(string name)
+        {
+            Name = DomainGuard.Required(name, "Permission name is required");
+        }
+
+        public void ChangeDescription(string description)
+        {
+            Description = DomainGuard.Required(description, "Permission description is required");
+        }
+
     }
 }

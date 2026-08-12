@@ -1,5 +1,6 @@
 ﻿using ProcureFlow.Domain.Common.Entities;
 using ProcureFlow.Domain.Common.Exceptions;
+using ProcureFlow.Domain.Common.Guards;
 
 namespace ProcureFlow.Domain.Roles;
 
@@ -21,18 +22,18 @@ public class Role : SoftDeletableEntity
 
     public Role(string name, string description)
     {
-        Name = name.Trim();
-        Description = description.Trim();
+        Name = DomainGuard.Required(name, "Role name is required.");
+        Description = DomainGuard.Required(description, "Role description is required.");
     }
 
     public void Rename(string name)
     {
-        Name = name.Trim();
+        Name = DomainGuard.Required(name, "Role name is required.");
     }
 
     public void UpdateDescription(string description)
     {
-        Description = description.Trim();
+        Description = DomainGuard.Required(description, "Role description is required.");
     }
 
     public void AddPermission(Permission permission)

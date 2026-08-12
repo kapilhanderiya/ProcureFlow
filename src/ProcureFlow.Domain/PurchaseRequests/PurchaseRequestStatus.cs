@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProcureFlow.Domain.Common.Enums
+namespace ProcureFlow.Domain.PurchaseRequests
 {
     public enum PurchaseRequestStatus
     {

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProcureFlow.Domain.Common.Enums
+namespace ProcureFlow.Domain.Approvals
 {
     public enum ApprovalStatus
     {
         Pending = 1,
         Approved = 2,
         Rejected = 3,
-        Returned = 4
+        Skipped = 4
     }
 }
