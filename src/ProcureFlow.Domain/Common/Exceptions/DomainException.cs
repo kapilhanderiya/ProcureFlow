@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProcureFlow.Domain.Common.Exceptions
+﻿namespace ProcureFlow.Domain.Common.Exceptions
 {
     public class DomainException : Exception
     {

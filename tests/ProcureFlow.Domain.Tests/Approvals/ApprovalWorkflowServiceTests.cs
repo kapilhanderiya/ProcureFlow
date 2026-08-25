@@ -1,14 +1,7 @@
 ﻿using ProcureFlow.Domain.Approvals;
 using ProcureFlow.Domain.Approvals.Services;
 using ProcureFlow.Domain.Common.ValueObjects;
-using ProcureFlow.Domain.Departments;
 using ProcureFlow.Domain.PurchaseRequests;
-using ProcureFlow.Domain.Roles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProcureFlow.Domain.Tests.Approvals
 {

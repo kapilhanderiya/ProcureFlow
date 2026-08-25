@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-using ProcureFlow.Domain.Common.Events;
+﻿using ProcureFlow.Domain.Common.Events;
 
 namespace ProcureFlow.Domain.Common.Entities
 {
