@@ -49,7 +49,7 @@ namespace ProcureFlow.Domain.Approvals
             }
             switch (ruleType)
             {
-                case ApprovalRuleType.AccountThreshold:
+                case ApprovalRuleType.AmountThreshold:
                     if(minimumAmount is null)
                     {
                         throw new DomainException("Amount threshold is required for amount-based approval rules.");

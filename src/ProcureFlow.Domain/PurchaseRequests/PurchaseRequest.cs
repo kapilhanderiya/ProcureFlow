@@ -135,13 +135,21 @@ namespace ProcureFlow.Domain.PurchaseRequests
 
             private void EnsureDraft()
             {
-                if(Status != PurchaseRequestStatus.Draft)
+                if (Status != PurchaseRequestStatus.Draft)
                 {
                     throw new DomainException("Purchase request can only be modified while in draft status.");
                 }
             }
 
-            private void EnsureUnderReview()
+        private void EnsureSubmitted()
+        {
+            if (Status != PurchaseRequestStatus.Submitted)
+            {
+                throw new DomainException("Purchase request can only be modified while in submitted  status.");
+            }
+        }
+
+        private void EnsureUnderReview()
             {
                 if (Status != PurchaseRequestStatus.UnderReview)
                 {
@@ -165,7 +173,7 @@ namespace ProcureFlow.Domain.PurchaseRequests
 
             public void CreateApprovals(IReadOnlyCollection<ApprovalRequirement> requirements)
             {
-                EnsureDraft();
+                EnsureSubmitted();
                 ArgumentNullException.ThrowIfNull(requirements);
                 if(requirements.Count == 0)
                 {
@@ -178,7 +186,7 @@ namespace ProcureFlow.Domain.PurchaseRequests
 
                 foreach(var requirement in requirements)
                 {
-                    _approvals.Add(new Approval(Id, requirement.ApprovalRoleId, requirement.Sequence));
+                    _approvals.Add(new Approval(Id, requirement.ApproverRoleId, requirement.Sequence));
                 }
                 Status = PurchaseRequestStatus.UnderReview;
             }
@@ -200,7 +208,11 @@ namespace ProcureFlow.Domain.PurchaseRequests
                     throw new DomainException("Cannot reject this approval step because the previous step has not been approved.");
                 }
                 approval.Approve(comments);
-            AddDomainEvent(new PurchaseRequestApprovedEvent(Id, RequesterId));
+                if (_approvals.All(a => a.Status == ApprovalStatus.Approved))
+                {
+                    Status = PurchaseRequestStatus.Approved;
+                    AddDomainEvent(new PurchaseRequestApprovedEvent(Id, RequesterId));
+                }
             }
 
             public void RejectStep(Guid approvelId, string comments)

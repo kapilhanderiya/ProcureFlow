@@ -6,4 +6,7 @@
     <Project Path="src/ProcureFlow.Infrastructure/ProcureFlow.Infrastructure.csproj" />
     <Project Path="src/ProcureFlow.Shared/ProcureFlow.Shared.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ProcureFlow.Domain.Tests/ProcureFlow.Domain.Tests.csproj" Id="9a24803f-24e5-4db7-8025-8e23288e4a7a" />
+  </Folder>
 </Solution>

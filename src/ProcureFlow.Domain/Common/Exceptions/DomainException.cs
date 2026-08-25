@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProcureFlow.Domain.Common.Exceptions
 {
-    internal class DomainException : Exception
+    public class DomainException : Exception
     {
         public DomainException(string message)
             : base(message) { }

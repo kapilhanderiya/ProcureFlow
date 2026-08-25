@@ -16,7 +16,7 @@ namespace ProcureFlow.Domain.Approvals
     {
         public Guid PurchaseRequestId { get; private set; }
 
-        public Guid ApproverId { get; private set; }
+        public Guid ApproverRoleId { get; private set; }
 
         public int Sequence { get; private set; }
         
@@ -30,13 +30,13 @@ namespace ProcureFlow.Domain.Approvals
         {
         }
 
-        public Approval(Guid purchaseRequestId, Guid approverId, int sequence)
+        public Approval(Guid purchaseRequestId, Guid approverRoleId, int sequence)
         {
             if(purchaseRequestId == Guid.Empty)
             {
                 throw new DomainException("Purchase request ID is required.");
             }
-            if(approverId == Guid.Empty)
+            if(approverRoleId == Guid.Empty)
             {
                 throw new DomainException("Approver ID is required.");
             }
@@ -45,7 +45,7 @@ namespace ProcureFlow.Domain.Approvals
                 throw new DomainException("Approval sequence must be greater than zero.");
             }
             PurchaseRequestId = purchaseRequestId;
-            ApproverId = approverId;
+            ApproverRoleId = approverRoleId;
             Sequence = sequence;
             Status = ApprovalStatus.Pending;
         }

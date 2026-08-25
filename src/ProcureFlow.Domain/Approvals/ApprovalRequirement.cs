@@ -11,13 +11,13 @@ namespace ProcureFlow.Domain.Approvals
 {
     public sealed class ApprovalRequirement
     {
-        public Guid ApprovalRoleId { get; }
+        public Guid ApproverRoleId { get; }
 
         public int Sequence { get; }
 
-        public ApprovalRequirement(Guid approvalRoleId,  int sequence)
+        public ApprovalRequirement(Guid approverRoleId,  int sequence)
         {
-            if(approvalRoleId == Guid.Empty)
+            if(approverRoleId == Guid.Empty)
             {
                 throw new DomainException("Approver role ID is required.");
             }
@@ -25,7 +25,7 @@ namespace ProcureFlow.Domain.Approvals
             {
                 throw new DomainException("Approval sequence must be greater than zero.");
             }
-            ApprovalRoleId = approvalRoleId;
+            ApproverRoleId = approverRoleId;
             Sequence = sequence;
         }
     }

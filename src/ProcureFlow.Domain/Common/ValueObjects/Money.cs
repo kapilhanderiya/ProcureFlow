@@ -25,7 +25,7 @@ namespace ProcureFlow.Domain.Common.ValueObjects
             {
                 throw new DomainException("Currency cannot be null or empty.");
             }
-            if (Currency.Length != 3)
+            if (currency.Length != 3)
             {
                 throw new DomainException("Currency must be a 3-letter ISO currency code.");
             }

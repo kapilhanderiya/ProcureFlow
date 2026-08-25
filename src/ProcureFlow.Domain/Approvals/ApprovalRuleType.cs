@@ -10,7 +10,7 @@ namespace ProcureFlow.Domain.Approvals
 {
     public enum ApprovalRuleType
     {
-        AccountThreshold = 1,
+        AmountThreshold = 1,
         Department = 2
     }
 }

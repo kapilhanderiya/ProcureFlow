@@ -29,8 +29,9 @@ namespace ProcureFlow.Domain.Approvals.Services
             var requirements = rules
                 .Where(rule => Matches(rule, purchaseRequest, total))
                 .OrderBy(rule => rule.Sequence)
-                .GroupBy(rule => rule.ApproverRoleId)
-                .Select(group => new ApprovalRequirement(group.Key, group.Min(rule => rule.Sequence)))
+                .Select(rule => new ApprovalRequirement(
+                    rule.ApproverRoleId,
+                    rule.Sequence))
                 .ToList();
 
             return requirements.AsReadOnly();
@@ -41,7 +42,7 @@ namespace ProcureFlow.Domain.Approvals.Services
         {
             return rule.RuleType switch
             {
-                ApprovalRuleType.AccountThreshold => total.Amount >= rule.MinimumAmount!.Value,
+                ApprovalRuleType.AmountThreshold => total.Amount >= rule.MinimumAmount!.Value,
                 ApprovalRuleType.Department => purchaseRequest.DepartmentId == rule.DepartmentId!.Value,
                 _ => throw new DomainException("Unsupported approval rule type.")
             };
