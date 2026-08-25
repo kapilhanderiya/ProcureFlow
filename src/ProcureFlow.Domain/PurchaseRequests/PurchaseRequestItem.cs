@@ -39,7 +39,7 @@ namespace ProcureFlow.Domain.PurchaseRequests
 
         public void ChangeQuantity(decimal quantity)
         {
-            if (quantity < 0)
+            if (quantity <= 0)
             {
                 throw new DomainException("Item quantity must be greater than zero.");
             }

@@ -2,24 +2,24 @@
 {
     public abstract class SoftDeletableEntity : AuditableEntity
     {
-        public bool isDeleted { get; protected set; }
+        public bool IsDeleted { get; protected set; }
 
         public DateTimeOffset? DeletedAt { get; protected set; }
 
         public Guid? DeletedBy { get; protected set; }
 
-        public void Delete(Guid DeletedBy)
+        public void Delete(Guid deletedBy)
         {
-            if (isDeleted)
+            if (IsDeleted)
                 return;
-            isDeleted = true;
+            IsDeleted = true;
             DeletedAt = DateTimeOffset.UtcNow;
-            this.DeletedBy = DeletedBy;
+            this.DeletedBy = deletedBy;
         }
 
         public void Restore()
         {
-            isDeleted = false;
+            IsDeleted = false;
             DeletedAt = null;
             DeletedBy = null;
         }

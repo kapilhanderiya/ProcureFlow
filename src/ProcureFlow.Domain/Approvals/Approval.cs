@@ -31,7 +31,7 @@ namespace ProcureFlow.Domain.Approvals
             }
             if(approverRoleId == Guid.Empty)
             {
-                throw new DomainException("Approver ID is required.");
+                throw new DomainException("Approver Role ID is required.");
             }
             if(sequence <= 0)
             {
@@ -41,6 +41,13 @@ namespace ProcureFlow.Domain.Approvals
             ApproverRoleId = approverRoleId;
             Sequence = sequence;
             Status = ApprovalStatus.Pending;
+        }
+
+        public void Skip()
+        {
+            EnsurePending();
+            Status = ApprovalStatus.Skipped;
+            DecisionAt = DateTime.UtcNow;
         }
 
         public void Approve(string? comments = null)
@@ -59,14 +66,8 @@ namespace ProcureFlow.Domain.Approvals
             DecisionAt = DateTime.UtcNow;
         }
 
-        public void skip()
-        {
-            EnsurePending();
-            Status = ApprovalStatus.Skipped;
-            DecisionAt = DateTime.UtcNow;
-        }
 
-        public void EnsurePending()
+        private void EnsurePending()
         {
             if(Status != ApprovalStatus.Pending)
             {
@@ -74,7 +75,7 @@ namespace ProcureFlow.Domain.Approvals
             }
         }
 
-        public string? NormalizeComments(string? comments)
+        public static string? NormalizeComments(string? comments)
         { 
             return string.IsNullOrWhiteSpace(comments) ? null : comments.Trim();
         }

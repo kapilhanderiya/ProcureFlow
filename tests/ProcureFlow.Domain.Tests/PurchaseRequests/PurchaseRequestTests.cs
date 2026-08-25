@@ -80,6 +80,18 @@ namespace ProcureFlow.Domain.Tests.PurchaseRequests
         }
 
         [Fact]
+        public void Constructor_ShouldRejectZeroQuantity()
+        {
+            var action = () => new PurchaseRequestItem(
+                Guid.NewGuid(),
+                "Laptop",
+                0,
+                new Money(70000m, "INR"));
+
+            Assert.Throws<DomainException>(action);
+        }
+
+        [Fact]
         public void AddItem_ShouldRejectItemWithDifferentCurrency()
         {
             var request = CreatePurchaseRequest();

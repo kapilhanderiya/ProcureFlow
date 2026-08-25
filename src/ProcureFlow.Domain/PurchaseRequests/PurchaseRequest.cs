@@ -90,42 +90,6 @@ namespace ProcureFlow.Domain.PurchaseRequests
                 AddDomainEvent(new PurchaseRequestSubmittedEvent(Id, RequesterId));
             }
 
-            public void StartReview()
-            {
-                if(Status != PurchaseRequestStatus.Submitted)
-                {
-                    throw new DomainException("Only submitted purchase requests can enter review.");
-                }
-                Status = PurchaseRequestStatus.UnderReview;
-            }
-
-            public void Approve()
-            {
-                if (Status != PurchaseRequestStatus.UnderReview)
-                {
-                    throw new DomainException("Only purchase requests under review can be approved.");
-                }
-                Status = PurchaseRequestStatus.Approved;
-            }
-
-            public void Reject()
-            {
-                if (Status != PurchaseRequestStatus.UnderReview)
-                {
-                    throw new DomainException("Only purchase requests under review can be rejected.");
-                }
-                Status = PurchaseRequestStatus.Rejected;
-            }
-
-            public void Cancel()
-            {
-                if(Status != PurchaseRequestStatus.Draft && Status != PurchaseRequestStatus.Submitted && Status != PurchaseRequestStatus.UnderReview)
-                {
-                    throw new DomainException("Only draft, submitted, or under-review purchase requests can be cancelled.");
-                }
-                Status = PurchaseRequestStatus.Cancelled;
-            }
-
             private void EnsureDraft()
             {
                 if (Status != PurchaseRequestStatus.Draft)
@@ -198,7 +162,7 @@ namespace ProcureFlow.Domain.PurchaseRequests
                    .FirstOrDefault();
                 if (previousApprovals is not null && previousApprovals.Status != ApprovalStatus.Approved)
                 {
-                    throw new DomainException("Cannot reject this approval step because the previous step has not been approved.");
+                    throw new DomainException("Cannot approve this approval step because the previous step has not been approved.");
                 }
                 approval.Approve(comments);
                 if (_approvals.All(a => a.Status == ApprovalStatus.Approved))
